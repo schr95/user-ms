@@ -1,0 +1,22 @@
+version: '3.9'
+services:
+  usersms:
+    build: .
+    ports:
+      - "5001:5001"
+    volumes:
+      - .:/app
+    depends_on:
+      - users
+
+  users:
+    image: mysql:8
+    #    platform: linux/x86_64 #for m1 chip macs
+    restart: always
+    environment:
+      MYSQL_DATABASE: users
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - .dbdata:/var/lib/mysql
+    ports:
+      - "30366:3306"
